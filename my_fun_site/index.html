@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Enchanted Realm - Interactive Adventure</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=Crimson+Text:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Background Elements -->
+        <div class="background-overlay"></div>
+        <div class="particles"></div>
+        
+        <!-- Audio Elements -->
+        <audio id="ambient-sound" loop>
+            <source src="data:audio/wav;base64,UklGRnoGAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQoGAACBhYqFbF1fdJivrJBhNjVgodDbq2EcBj+a2/LDciUFLIHO8tiJNwgZaLvt559NEAxQp+PwtmMcBjiR1/LMeSwFJHfH8N2QQAoUXrTp66hVFApGn+Drt2kfCCN2w+/agjMIKG1NvCvqpVQUKHW/7N+NOAoUXrPq66tTFAhBn+DqvmsUKHW/7N+NOA==" type="audio/wav">
+        </audio>
+        
+        <!-- Main Content Container -->
+        <div class="content-container">
+            <!-- Story Container -->
+            <div id="story-container" class="story-container">
+                <div class="welcome-message">
+                    <h1 style="font-family: 'Cinzel', serif; font-size:3rem;">Helloooooooo!😀</h1>
+                    <p style="font-size: 1rem;">This site was first deployed from terraform 19/8/25 by 7:00AM.</p>
+                    <p style="font-size: 2rem; color: #a8edea; font-weight:600; opacity: 0;  animation: fadeInUp 0.8s ease-out 1s forwards;">You have successfully re-deployed it today: <span></span></p>
+                </div>
+                <!-- Start Screen -->
+                <div id="start-screen" class="story-page active">
+                    <div class="story-content">
+                        <h1 class="title">The Enchanted Realm</h1>
+                        <p class="subtitle">An Interactive Adventure</p>
+                        <div class="story-text">
+                            <p>Welcome, brave traveler, to a world where magic flows through ancient forests and forgotten ruins hold secrets of immense power.</p>
+                            <p>Your destiny awaits...</p>
+                        </div>
+                        <div class="choices">
+                            <button class="choice-btn primary" onclick="startAdventure()">
+                                <span class="btn-text">Begin Your Journey</span>
+                                <span class="btn-glow"></span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Character Selection -->
+                <div id="character-select" class="story-page">
+                    <div class="story-content">
+                        <h2 class="page-title">Choose Your Character</h2>
+                        <div class="story-text">
+                            <p>Three paths of power call to you. Which will you choose?</p>
+                        </div>
+                        <div class="character-grid">
+                            <div class="character-card" onclick="selectCharacter('mage')">
+                                <div class="character-icon">🧙‍♂️</div>
+                                <h3>Mystic Mage</h3>
+                                <p>Master of elemental magic and ancient wisdom</p>
+                            </div>
+                            <div class="character-card" onclick="selectCharacter('warrior')">
+                                <div class="character-icon">⚔️</div>
+                                <h3>Shadow Warrior</h3>
+                                <p>Swift blade and keen instincts guide your path</p>
+                            </div>
+                            <div class="character-card" onclick="selectCharacter('ranger')">
+                                <div class="character-icon">🏹</div>
+                                <h3>Forest Ranger</h3>
+                                <p>One with nature, master of bow and beast</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Story Pages -->
+                <div id="forest-entrance" class="story-page">
+                    <div class="story-content">
+                        <h2 class="page-title">The Whispering Forest</h2>
+                        <div class="story-text">
+                            <p>You stand at the edge of the Whispering Forest, where ancient trees seem to murmur secrets in the wind. Mystical light filters through the canopy, casting dancing shadows on the moss-covered ground.</p>
+                            <p>Two paths diverge before you...</p>
+                        </div>
+                        <div class="choices">
+                            <button class="choice-btn" onclick="goToPage('dark-path')">
+                                <span class="btn-text">Take the Dark Path</span>
+                                <span class="btn-glow"></span>
+                            </button>
+                            <button class="choice-btn" onclick="goToPage('light-path')">
+                                <span class="btn-text">Follow the Light Path</span>
+                                <span class="btn-glow"></span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="dark-path" class="story-page">
+                    <div class="story-content">
+                        <h2 class="page-title">The Shadow's Embrace</h2>
+                        <div class="story-text">
+                            <p>The dark path leads you through twisted roots and hanging moss. Suddenly, you hear a low growl echoing through the trees. A pair of glowing eyes watches you from the shadows.</p>
+                            <p>Your heart races as you consider your options...</p>
+                        </div>
+                        <div class="choices">
+                            <button class="choice-btn" onclick="goToPage('face-creature')">
+                                <span class="btn-text">Face the Creature</span>
+                                <span class="btn-glow"></span>
+                            </button>
+                            <button class="choice-btn" onclick="goToPage('sneak-past')">
+                                <span class="btn-text">Sneak Past Quietly</span>
+                                <span class="btn-glow"></span>
+                            </button>
+                            <button class="choice-btn" onclick="goToPage('use-magic')">
+                                <span class="btn-text">Use Your Powers</span>
+                                <span class="btn-glow"></span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="light-path" class="story-page">
+                    <div class="story-content">
+                        <h2 class="page-title">The Luminous Grove</h2>
+                        <div class="story-text">
+                            <p>The light path opens into a beautiful grove where crystalline flowers emit a soft, magical glow. In the center stands an ancient shrine with a mysterious orb floating above it.</p>
+                            <p>The orb pulses with inner light, calling to you...</p>
+                        </div>
+                        <div class="choices">
+                            <button class="choice-btn" onclick="goToPage('touch-orb')">
+                                <span class="btn-text">Touch the Orb</span>
+                                <span class="btn-glow"></span>
+                            </button>
+                            <button class="choice-btn" onclick="goToPage('examine-shrine')">
+                                <span class="btn-text">Examine the Shrine</span>
+                                <span class="btn-glow"></span>
+                            </button>
+                            <button class="choice-btn" onclick="goToPage('leave-grove')">
+                                <span class="btn-text">Leave the Grove</span>
+                                <span class="btn-glow"></span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="face-creature" class="story-page">
+                    <div class="story-content">
+                        <h2 class="page-title">The Guardian's Test</h2>
+                        <div class="story-text">
+                            <p>As you step forward, the creature emerges—a majestic wolf with silver fur that shimmers like starlight. Its eyes hold ancient wisdom, not malice.</p>
+                            <p>"Brave soul," it speaks telepathically, "you have passed the first test. Your courage has earned you the right to choose your reward."</p>
+                        </div>
+                        <div class="choices">
+                            <button class="choice-btn" onclick="goToPage('wisdom-reward')">
+                                <span class="btn-text">Ask for Wisdom</span>
+                                <span class="btn-glow"></span>
+                            </button>
+                            <button class="choice-btn" onclick="goToPage('power-reward')">
+                                <span class="btn-text">Ask for Power</span>
+                                <span class="btn-glow"></span>
+                            </button>
+                            <button class="choice-btn" onclick="goToPage('friendship-reward')">
+                                <span class="btn-text">Ask for Friendship</span>
+                                <span class="btn-glow"></span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="touch-orb" class="story-page">
+                    <div class="story-content">
+                        <h2 class="page-title">The Vision of Truth</h2>
+                        <div class="story-text">
+                            <p>As your fingers touch the orb, visions flood your mind. You see the history of this realm—ancient battles, forgotten heroes, and a great darkness that once threatened all life.</p>
+                            <p>The orb shows you three possible futures, each dependent on the choice you make now...</p>
+                        </div>
+                        <div class="choices">
+                            <button class="choice-btn" onclick="goToPage('unite-realm')">
+                                <span class="btn-text">Unite the Scattered Tribes</span>
+                                <span class="btn-glow"></span>
+                            </button>
+                            <button class="choice-btn" onclick="goToPage('seek-artifact')">
+                                <span class="btn-text">Seek the Lost Artifact</span>
+                                <span class="btn-glow"></span>
+                            </button>
+                            <button class="choice-btn" onclick="goToPage('become-guardian')">
+                                <span class="btn-text">Become the New Guardian</span>
+                                <span class="btn-glow"></span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Ending Pages -->
+                <div id="wisdom-reward" class="story-page ending">
+                    <div class="story-content">
+                        <h2 class="page-title">The Path of Wisdom</h2>
+                        <div class="story-text">
+                            <p>The guardian wolf touches your forehead with its nose, and suddenly you understand the language of all living things. The trees share their ancient memories, the wind carries messages from distant lands.</p>
+                            <p>You have become a bridge between worlds, a keeper of natural wisdom that will guide you through any challenge.</p>
+                            <div class="ending-badge">🧠 Wisdom Ending Unlocked</div>
+                        </div>
+                        <div class="choices">
+                            <button class="choice-btn primary" onclick="restartStory()">
+                                <span class="btn-text">Begin New Adventure</span>
+                                <span class="btn-glow"></span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="unite-realm" class="story-page ending">
+                    <div class="story-content">
+                        <h2 class="page-title">The Great Unification</h2>
+                        <div class="story-text">
+                            <p>With the orb's power, you travel across the realm, bringing together the scattered tribes under a banner of hope. Your leadership unites magic users, warriors, and nature spirits in harmony.</p>
+                            <p>The realm enters a new golden age, and your name becomes legend.</p>
+                            <div class="ending-badge">👑 Leadership Ending Unlocked</div>
+                        </div>
+                        <div class="choices">
+                            <button class="choice-btn primary" onclick="restartStory()">
+                                <span class="btn-text">Begin New Adventure</span>
+                                <span class="btn-glow"></span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="become-guardian" class="story-page ending">
+                    <div class="story-content">
+                        <h2 class="page-title">The Eternal Guardian</h2>
+                        <div class="story-text">
+                            <p>You accept the sacred duty of protecting the realm's magic. The orb merges with your essence, granting you immortality and the power to maintain the balance between all magical forces.</p>
+                            <p>Though you sacrifice your mortal life, your spirit becomes one with the realm itself.</p>
+                            <div class="ending-badge">🛡️ Guardian Ending Unlocked</div>
+                        </div>
+                        <div class="choices">
+                            <button class="choice-btn primary" onclick="restartStory()">
+                                <span class="btn-text">Begin New Adventure</span>
+                                <span class="btn-glow"></span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Add more ending pages -->
+                <div id="power-reward" class="story-page ending">
+                    <div class="story-content">
+                        <h2 class="page-title">The Arcane Mastery</h2>
+                        <div class="story-text">
+                            <p>The wolf channels raw magical energy into your being. Lightning crackles at your fingertips, and you feel the elements bend to your will. You have become a master of arcane forces.</p>
+                            <p>With great power comes the responsibility to use it wisely.</p>
+                            <div class="ending-badge">⚡ Power Ending Unlocked</div>
+                        </div>
+                        <div class="choices">
+                            <button class="choice-btn primary" onclick="restartStory()">
+                                <span class="btn-text">Begin New Adventure</span>
+                                <span class="btn-glow"></span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="friendship-reward" class="story-page ending">
+                    <div class="story-content">
+                        <h2 class="page-title">The Eternal Bond</h2>
+                        <div class="story-text">
+                            <p>The guardian wolf becomes your lifelong companion. Together, you protect the innocent and explore the deepest mysteries of the realm. Your bond transcends the physical world.</p>
+                            <p>True friendship is the greatest magic of all.</p>
+                            <div class="ending-badge">🐺 Friendship Ending Unlocked</div>
+                        </div>
+                        <div class="choices">
+                            <button class="choice-btn primary" onclick="restartStory()">
+                                <span class="btn-text">Begin New Adventure</span>
+                                <span class="btn-glow"></span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="seek-artifact" class="story-page ending">
+                    <div class="story-content">
+                        <h2 class="page-title">The Artifact Hunter</h2>
+                        <div class="story-text">
+                            <p>The vision guides you to the legendary Moonstone of Eternity, hidden in the deepest caverns. Its power allows you to heal any wound and cure any curse throughout the land.</p>
+                            <p>You become known as the Great Healer, bringing hope wherever darkness falls.</p>
+                            <div class="ending-badge">💎 Artifact Ending Unlocked</div>
+                        </div>
+                        <div class="choices">
+                            <button class="choice-btn primary" onclick="restartStory()">
+                                <span class="btn-text">Begin New Adventure</span>
+                                <span class="btn-glow"></span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Add placeholder pages for other paths -->
+                <div id="sneak-past" class="story-page">
+                    <div class="story-content">
+                        <h2 class="page-title">The Silent Path</h2>
+                        <div class="story-text">
+                            <p>You move like a whisper through the shadows, avoiding the creature's gaze. Your stealth leads you to a hidden cave filled with glowing crystals and ancient treasures.</p>
+                            <p>In the deepest chamber, you discover...</p>
+                        </div>
+                        <div class="choices">
+                            <button class="choice-btn" onclick="goToPage('crystal-chamber')">
+                                <span class="btn-text">Enter the Crystal Chamber</span>
+                                <span class="btn-glow"></span>
+                            </button>
+                            <button class="choice-btn" onclick="goToPage('treasure-room')">
+                                <span class="btn-text">Explore the Treasure Room</span>
+                                <span class="btn-glow"></span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="use-magic" class="story-page">
+                    <div class="story-content">
+                        <h2 class="page-title">The Magical Confrontation</h2>
+                        <div class="story-text">
+                            <p>You channel your inner power, and brilliant light emanates from your hands. The creature retreats, revealing itself to be a test. A hidden doorway opens in a nearby tree trunk.</p>
+                            <p>Ancient magic recognizes ancient magic...</p>
+                        </div>
+                        <div class="choices">
+                            <button class="choice-btn" onclick="goToPage('magic-door')">
+                                <span class="btn-text">Enter the Magic Door</span>
+                                <span class="btn-glow"></span>
+                            </button>
+                            <button class="choice-btn" onclick="goToPage('follow-creature')">
+                                <span class="btn-text">Follow the Creature</span>
+                                <span class="btn-glow"></span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Easter Egg Pages -->
+                <div id="crystal-chamber" class="story-page ending">
+                    <div class="story-content">
+                        <h2 class="page-title">The Crystal Heart</h2>
+                        <div class="story-text">
+                            <p>🎉 SECRET ENDING DISCOVERED! 🎉</p>
+                            <p>You've found the legendary Crystal Heart, a gem that grants the power to see through illusions and reveal truth. This hidden ending is only accessible through the path of stealth and patience.</p>
+                            <div class="ending-badge special">💎 Secret Crystal Ending Unlocked</div>
+                        </div>
+                        <div class="choices">
+                            <button class="choice-btn primary" onclick="restartStory()">
+                                <span class="btn-text">Begin New Adventure</span>
+                                <span class="btn-glow"></span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- More placeholder endings -->
+                <div id="examine-shrine" class="story-page ending">
+                    <div class="story-content">
+                        <h2 class="page-title">The Scholar's Discovery</h2>
+                        <div class="story-text">
+                            <p>Your careful examination reveals ancient runes that tell the story of the realm's creation. You become the keeper of this knowledge, able to unlock the mysteries of magic itself.</p>
+                            <div class="ending-badge">📚 Knowledge Ending Unlocked</div>
+                        </div>
+                        <div class="choices">
+                            <button class="choice-btn primary" onclick="restartStory()">
+                                <span class="btn-text">Begin New Adventure</span>
+                                <span class="btn-glow"></span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- Progress Indicator -->
+        <div class="progress-container">
+            <div class="progress-bar">
+                <div class="progress-fill"></div>
+            </div>
+            <span class="progress-text">Chapter 1</span>
+        </div>
+
+        <!-- Settings Panel -->
+        <div class="settings-panel">
+            <button class="settings-btn" onclick="toggleAudio()">
+                <span id="audio-icon">🔊</span>
+            </button>
+            <button class="settings-btn" onclick="restartStory()">
+                🔄
+            </button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
