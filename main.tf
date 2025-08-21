@@ -47,5 +47,5 @@ resource "netlify_site" "main" {
         repo_path = "${var.github_owner}/${var.repo_name}"
     } 
 
-    depends_on = [ local_file.index ]
+    # depends_on = [ local_file.index ]
 }
