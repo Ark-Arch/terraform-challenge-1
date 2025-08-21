@@ -24,15 +24,15 @@ resource "github_repository_deploy_key" "netlify"{
     read_only = true
 }
 
-# generate a dynamic index.html
-resource "local_file" "index" {
-      content = templatefile("${path.module}/my_fun_site/index.html", {
-        today_date = local.today_date
-        now_time = local.now_time
-      })
+# # generate a dynamic index.html
+# resource "local_file" "index" {
+#       content = templatefile("my_fun_site/index.html", {
+#         today_date = local.today_date
+#         now_time = local.now_time
+#       })
 
-      filename = "${path.module}/my_fun_site/index.html"
-}
+#       filename = "my_fun_site/test_index.html"
+# }
 
 
 resource "netlify_site" "main" {
