@@ -8,8 +8,8 @@ resource "random_pet" "name" {
 
 # this helps hold the current date/time
 locals {
-    today_date = formatdate("DD-MM-YYYY", timestamp())
-    now_time = formatdate("hh:mm:ss", timestamp())
+    today_date = formatdate("02-01-2006", timestamp())
+    now_time = formatdate("15:04:05", timestamp())
 }
 
 # create the deploy key needed from netlify
@@ -26,7 +26,7 @@ resource "github_repository_deploy_key" "netlify"{
 
 # generate a dynamic index.html
 resource "local_file" "index" {
-      content = templatefile("${path.module}/my_fun_site/index.html.tmpl", {
+      content = templatefile("${path.module}/my_fun_site/index.html", {
         today_date = local.today_date
         now_time = local.now_time
       })
