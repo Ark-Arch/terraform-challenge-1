@@ -6,10 +6,8 @@ resource "random_pet" "name" {
     }
 }
 
-# this helps hold the current date/time and repo_url
+# this helps hold the repo_url
 locals {
-  today_date = formatdate("02-01-2006", timestamp())
-  now_time   = formatdate("15:04:05", timestamp())
   repo_url   = "https://github.com/${var.github_owner}/${var.repo_name}.git"
 }
 
@@ -39,7 +37,6 @@ resource "null_resource" "update_html" {
         always_run = timestamp()
     }  
 }
-
 
 resource "netlify_site" "main" {
     name = "${var.site_name}-${random_pet.name.id}"

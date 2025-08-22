@@ -4,11 +4,6 @@ variable "netlify_token" {
     sensitive = true
 }
 
-# variable "netlify_base_url" {
-#     type = string
-#     default = "value"  
-# }
-
 variable "site_name" {
     type = string
     default = "fun-site"  
@@ -32,7 +27,6 @@ variable "repo_name" {
     default = "terraform-challenge-1"
     description = "name of the repository"  
 }
-
 
 variable "repo_branch" {
     type = string
