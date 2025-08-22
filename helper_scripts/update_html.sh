@@ -45,7 +45,7 @@ HTML_FILE="my_fun_site/index.html"
 
 if [ -f "$HTML_FILE" ]; then
     # Replace placeholder "today_date" with the current timestamp
-    sed -i "s|today_date|$(date)|g" "$HTML_FILE"
+    sed -i 's|\(You have successfully re-deployed it on \)[^<]*|\1'"$(date)"'|g' "$HTML_FILE"
 else
     # Create the file if it doesn’t exist
     mkdir -p "$(dirname "$HTML_FILE")"
