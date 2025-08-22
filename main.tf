@@ -6,11 +6,13 @@ resource "random_pet" "name" {
     }
 }
 
-# this helps hold the current date/time
+# this helps hold the current date/time and repo_url
 locals {
-    today_date = formatdate("02-01-2006", timestamp())
-    now_time = formatdate("15:04:05", timestamp())
+  today_date = formatdate("02-01-2006", timestamp())
+  now_time   = formatdate("15:04:05", timestamp())
+  repo_url   = "https://github.com/${var.github_owner}/${var.repo_name}.git"
 }
+
 
 # create the deploy key needed from netlify
 resource "netlify_deploy_key" "key" {
@@ -24,15 +26,19 @@ resource "github_repository_deploy_key" "netlify"{
     read_only = true
 }
 
-# # generate a dynamic index.html
-# resource "local_file" "index" {
-#       content = templatefile("my_fun_site/index.html", {
-#         today_date = local.today_date
-#         now_time = local.now_time
-#       })
+resource "null_resource" "update_html" {
 
-#       filename = "my_fun_site/test_index.html"
-# }
+    provisioner "local-exec" {
+        command = "bash ./helper_scripts/update_html.sh ${local.repo_url}"
+        environment = {
+          GITHUB_TOKEN = var.github_token
+        }
+    }
+
+    triggers = {
+        always_run = timestamp()
+    }  
+}
 
 
 resource "netlify_site" "main" {
@@ -47,5 +53,5 @@ resource "netlify_site" "main" {
         repo_path = "${var.github_owner}/${var.repo_name}"
     } 
 
-    # depends_on = [ local_file.index ]
+    depends_on = [ null_resource.update_html ]
 }
